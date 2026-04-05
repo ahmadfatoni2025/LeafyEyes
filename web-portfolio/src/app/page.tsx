@@ -20,7 +20,7 @@ export default function Home() {
   const [score, setScore] = useState(0);
   const [clickCount, setClickCount] = useState(0);
   const [hoverBoxStatus, setHoverBoxStatus] = useState<"IDLE" | "HOVERED" | "SUCCESS">("IDLE");
-  
+
   // Refs untuk sinkronisasi state di dalam loop Kamera (yang menghindari stale closure React)
   const hoverBoxStatusRef = useRef<"IDLE" | "HOVERED" | "SUCCESS">("IDLE");
   const hoverTimerRef = useRef<number | undefined>(undefined);
@@ -143,24 +143,24 @@ export default function Home() {
         // -- MANUAL Bounding Box Hit-Test untuk MODULE 02 (Hover Stability) --
         const hoverMod = document.getElementById("hover-module");
         if (hoverMod) {
-           const rect = hoverMod.getBoundingClientRect();
-           const isHovering = smoothedX >= rect.left && smoothedX <= rect.right && smoothedY >= rect.top && smoothedY <= rect.bottom;
-           
-           if (isHovering && hoverBoxStatusRef.current === "IDLE") {
-              setHoverBoxStatus("HOVERED");
-              hoverBoxStatusRef.current = "HOVERED";
-              hoverTimerRef.current = window.setTimeout(() => {
-                 if (hoverBoxStatusRef.current === "HOVERED") {
-                    setHoverBoxStatus("SUCCESS");
-                    hoverBoxStatusRef.current = "SUCCESS";
-                    setScore(s => s + 20);
-                 }
-              }, 2000);
-           } else if (!isHovering && hoverBoxStatusRef.current !== "IDLE") {
-              setHoverBoxStatus("IDLE");
-              hoverBoxStatusRef.current = "IDLE";
-              clearTimeout(hoverTimerRef.current);
-           }
+          const rect = hoverMod.getBoundingClientRect();
+          const isHovering = smoothedX >= rect.left && smoothedX <= rect.right && smoothedY >= rect.top && smoothedY <= rect.bottom;
+
+          if (isHovering && hoverBoxStatusRef.current === "IDLE") {
+            setHoverBoxStatus("HOVERED");
+            hoverBoxStatusRef.current = "HOVERED";
+            hoverTimerRef.current = window.setTimeout(() => {
+              if (hoverBoxStatusRef.current === "HOVERED") {
+                setHoverBoxStatus("SUCCESS");
+                hoverBoxStatusRef.current = "SUCCESS";
+                setScore(s => s + 20);
+              }
+            }, 2000);
+          } else if (!isHovering && hoverBoxStatusRef.current !== "IDLE") {
+            setHoverBoxStatus("IDLE");
+            hoverBoxStatusRef.current = "IDLE";
+            clearTimeout(hoverTimerRef.current);
+          }
         }
         // ---------------------------------------------------------------------
 
@@ -376,9 +376,9 @@ export default function Home() {
       {/* =======================================
           MAIN BOARD KANAN (TESTING SUITE UI/UX)
           ======================================= */}
-      <section className="flex-1 h-full px-4 md:px-10 py-8 md:py-10 flex flex-col z-10 overflow-y-auto" style={{ scrollbarWidth: 'none' }}>
+      <section className="flex-1 h-full px-4 md:px-10 py-8 md:py-8 flex flex-col z-10 overflow-y-auto" style={{ scrollbarWidth: 'none' }}>
         {/* GRID TESTING MODULES */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 flex-1 pb-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 flex-1">
 
           {/* 1. CLICK ACCURACY SIMULATOR */}
           <div
