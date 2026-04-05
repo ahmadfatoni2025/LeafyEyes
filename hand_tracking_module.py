@@ -14,11 +14,8 @@ class HandDetector:
         self.track_con = track_con
         model_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "hand_landmarker.task")
         if not os.path.exists(model_path):
-            raise FileNotFoundError(
-                f"Model file tidak ditemukan: {model_path}\n"
-                "Download dari: https://storage.googleapis.com/mediapipe-models/"
-                "hand_landmarker/hand_landmarker/float16/latest/hand_landmarker.task"
-            )
+            raise FileNotFoundError(f"Model file tidak ditemukan: {model_path}")
+        
         base_options = mp_python.BaseOptions(model_asset_path=model_path)
         options = vision.HandLandmarkerOptions(
             base_options=base_options,
@@ -36,8 +33,14 @@ class HandDetector:
     def find_hands(self, img, draw=True):
         img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=img_rgb)
-        self.results = self.landmarker.detect(mp_image)
-        if draw and self.results.hand_landmarks:
+        
+        try:
+            self.results = self.landmarker.detect(mp_image)
+        except Exception as e:
+            print(f"[WARNING] Mediapipe detection error: {e}")
+            self.results = None
+
+        if draw and self.results and self.results.hand_landmarks:
             for hand_lm in self.results.hand_landmarks:
                 self._draw_landmarks(img, hand_lm)
         return img

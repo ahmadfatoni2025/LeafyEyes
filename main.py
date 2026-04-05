@@ -17,8 +17,8 @@ from gesture_controller import (
 )
 from utils import map_coordinates, smooth
 
-CAM_WIDTH = 1920
-CAM_HEIGHT = 1080
+CAM_WIDTH = 640
+CAM_HEIGHT = 480
 FRAME_REDUCTION = 100
 SMOOTHING_FACTOR = 5
 SCREEN_W, SCREEN_H = pyautogui.size()
@@ -105,7 +105,8 @@ def draw_gesture_guide(img):
     h, w, _ = img.shape
     guides = [
         ("Telunjuk", "Gerak kursor"),
-        ("Tekuk/Pinch", "Klik kiri"),
+        ("Telunjuk tekuk", "Klik kiri"),
+        ("Pinch", "Klik kiri"),
         ("Dua jari", "Scroll"),
         ("Kepalan", "Drag"),
     ]
@@ -128,17 +129,19 @@ def main():
     print(f"  Smoothing: {SMOOTHING_FACTOR}")
     print("=" * 50)
     print()
-    print("  Gesture:")
-    print("    Telunjuk saja       → Gerak kursor")
-    print("    Tel+Tgh (dekat)     → Klik kiri")
-    print("    Jempol+Telunjuk     → Klik kanan")
-    print("    Tel+Tgh (jauh)      → Scroll")
-    print("    Kepalan             → Drag")
-    print("    Tangan terbuka      → Pause")
-    print("    3 jari swipe        → Alt+Tab / Task View / Show Desktop")
-    print("    4 jari swipe        → Virtual Desktop / Max / Min")
-    print("    Jempol+Kelingking   → Volume")
-    print("    Kelingking saja     → Screenshot")
+    print("  Gesture Utama:")
+    print("    Telunjuk lurus     → Gerak kursor")
+    print("    Telunjuk tekuk     → Klik kiri")
+    print("    Jempol + Telunjuk  → Klik kiri (Pinch)")
+    print("    Dua jari terbuka   → Scroll")
+    print("    Kepalan            → Drag")
+    print("    Tangan terbuka     → Pause")
+    print()
+    print("  Shortcut Windows:")
+    print("    3 Jari Swipe       → Alt+Tab / Task View / Desktop")
+    print("    4 Jari Swipe       → Virtual Desktop / Max / Min")
+    print("    Jempol + Kelingking→ Volume")
+    print("    Kelingking saja    → Screenshot")
     print()
     print("  Tekan 'q' untuk keluar.")
     print("  Fail-safe: gerak mouse ke pojok layar.")
